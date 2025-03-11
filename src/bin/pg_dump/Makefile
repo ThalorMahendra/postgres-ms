@@ -40,7 +40,8 @@ OBJS = \
 	pg_backup_directory.o \
 	pg_backup_null.o \
 	pg_backup_tar.o \
-	pg_backup_utils.o
+	pg_backup_utils.o \
+	connectdb.o
 
 all: pg_dump pg_restore pg_dumpall
 
@@ -50,8 +51,8 @@ pg_dump: pg_dump.o common.o pg_dump_sort.o $(OBJS) | submake-libpq submake-libpg
 pg_restore: pg_restore.o $(OBJS) | submake-libpq submake-libpgport submake-libpgfeutils
 	$(CC) $(CFLAGS) pg_restore.o $(OBJS) $(LDFLAGS) $(LDFLAGS_EX) $(LIBS) -o $@$(X)
 
-pg_dumpall: pg_dumpall.o dumputils.o filter.o $(WIN32RES) | submake-libpq submake-libpgport submake-libpgfeutils
-	$(CC) $(CFLAGS) pg_dumpall.o dumputils.o filter.o $(WIN32RES) $(LDFLAGS) $(LDFLAGS_EX) $(LIBS) -o $@$(X)
+pg_dumpall: pg_dumpall.o dumputils.o filter.o connectdb.o pg_backup_utils.o $(WIN32RES) | submake-libpq submake-libpgport submake-libpgfeutils
+	$(CC) $(CFLAGS) pg_dumpall.o dumputils.o filter.o connectdb.o pg_backup_utils.o $(WIN32RES) $(LDFLAGS) $(LDFLAGS_EX) $(LIBS) -o $@$(X)
 
 install: all installdirs
 	$(INSTALL_PROGRAM) pg_dump$(X) '$(DESTDIR)$(bindir)'/pg_dump$(X)
@@ -71,5 +72,5 @@ uninstall:
 	rm -f $(addprefix '$(DESTDIR)$(bindir)'/, pg_dump$(X) pg_restore$(X) pg_dumpall$(X))
 
 clean distclean:
-	rm -f pg_dump$(X) pg_restore$(X) pg_dumpall$(X) $(OBJS) pg_dump.o common.o pg_dump_sort.o pg_restore.o pg_dumpall.o
+	rm -f pg_dump$(X) pg_restore$(X) pg_dumpall$(X) $(OBJS) pg_dump.o common.o pg_dump_sort.o pg_restore.o pg_dumpall.o connectdb.o
 	rm -rf tmp_check

@@ -30,6 +30,7 @@ pg_dump_sources = files(
   'common.c',
   'pg_dump.c',
   'pg_dump_sort.c',
+  'connectdb.c',
 )
 
 if host_system == 'windows'
@@ -49,6 +50,7 @@ bin_targets += pg_dump
 
 pg_dumpall_sources = files(
   'pg_dumpall.c',
+  'connectdb.c',
 )
 
 if host_system == 'windows'
