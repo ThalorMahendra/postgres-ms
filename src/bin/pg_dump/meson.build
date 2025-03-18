@@ -6,6 +6,7 @@ pg_dump_common_sources = files(
   'compress_lz4.c',
   'compress_none.c',
   'compress_zstd.c',
+  'connectdb.c',
   'dumputils.c',
   'filter.c',
   'parallel.c',
@@ -16,7 +17,6 @@ pg_dump_common_sources = files(
   'pg_backup_null.c',
   'pg_backup_tar.c',
   'pg_backup_utils.c',
-  'connectdb.c',
 )
 
 pg_dump_common = static_library('libpgdump_common',
@@ -49,8 +49,8 @@ bin_targets += pg_dump
 
 
 pg_dumpall_sources = files(
-  'pg_dumpall.c',
   'connectdb.c',
+  'pg_dumpall.c',
 )
 
 if host_system == 'windows'
@@ -69,8 +69,8 @@ bin_targets += pg_dumpall
 
 
 pg_restore_sources = files(
-  'pg_restore.c',
   'connectdb.c',
+  'pg_restore.c',
 )
 
 if host_system == 'windows'
