@@ -51,8 +51,8 @@ pg_dump: pg_dump.o common.o pg_dump_sort.o $(OBJS) | submake-libpq submake-libpg
 pg_restore: pg_restore.o $(OBJS) | submake-libpq submake-libpgport submake-libpgfeutils
 	$(CC) $(CFLAGS) pg_restore.o $(OBJS) $(LDFLAGS) $(LDFLAGS_EX) $(LIBS) -o $@$(X)
 
-pg_dumpall: pg_dumpall.o dumputils.o filter.o $(WIN32RES) connectdb.o pg_backup_utils.o | submake-libpq submake-libpgport submake-libpgfeutils
-	$(CC) $(CFLAGS) pg_dumpall.o dumputils.o filter.o $(WIN32RES) connectdb.o pg_backup_utils.o $(LDFLAGS) $(LDFLAGS_EX) $(LIBS) -o $@$(X)
+pg_dumpall: pg_dumpall.o compress_zstd.o compress_none.o pg_backup_directory.o pg_backup_null.o pg_backup_custom.o compress_lz4.o compress_gzip.o connectdb.o pg_backup_utils.o dumputils.o filter.o parallel.o pg_backup_db.o pg_backup_archiver.o compress_io.o pg_backup_tar.o $(WIN32RES) | submake-libpq submake-libpgport submake-libpgfeutils
+	$(CC) $(CFLAGS) pg_dumpall.o compress_zstd.o compress_none.o pg_backup_directory.o pg_backup_null.o pg_backup_custom.o compress_lz4.o compress_gzip.o connectdb.o pg_backup_utils.o dumputils.o filter.o parallel.o pg_backup_db.o pg_backup_archiver.o compress_io.o pg_backup_tar.o $(WIN32RES) $(LDFLAGS) $(LDFLAGS_EX) $(LIBS) -o $@$(X)
 
 install: all installdirs
 	$(INSTALL_PROGRAM) pg_dump$(X) '$(DESTDIR)$(bindir)'/pg_dump$(X)
