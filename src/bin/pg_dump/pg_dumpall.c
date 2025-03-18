@@ -81,7 +81,6 @@ static void create_or_open_dir(const char *dirname);
 static ArchiveFormat parseDumpFormat(const char *format);
 
 static char pg_dump_bin[MAXPGPATH];
-const char *progname;
 static PQExpBuffer pgdumpopts;
 static const char *connstr = "";
 static bool output_clean = false;
